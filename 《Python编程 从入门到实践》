@@ -1,0 +1,147 @@
+# # 生成数据
+import matplotlib.pyplot as plt
+from random import choice
+from random import randint
+from plotly.graph_objs import Bar, Layout
+from plotly import offline
+
+# # 绘制折线图
+# input_values = [1, 2, 3, 4, 5]
+# squares = [1, 4, 9, 16, 25]
+#
+# plt.style.use('seaborn')
+# fig, ax = plt.subplots()
+# ax.plot(input_values, squares, linewidth=3)
+#
+# # 设置图标标题并给坐标轴加上标签
+# ax.set_title("Squares", fontsize=24)
+# ax.set_xlabel("Values", fontsize=14)
+# ax.set_ylabel("Value's of Squares", fontsize=14)
+#
+# # 设置刻度标记的大小
+# ax.tick_params(axis='both', which='major', labelsize=14)
+# plt.show()
+
+# # 绘制散点图
+# plt.style.use('seaborn')
+# fig, ax = plt.subplots()
+#
+# x_values = range(1, 10001)
+# y_values = [x**2 for x in x_values]
+#
+# # 设置图标标题并给坐标轴加上标签
+# ax.set_title("Squares", fontsize=24)
+# ax.set_xlabel("Values", fontsize=14)
+# ax.set_ylabel("Value's of Squares", fontsize=14)
+#
+# ax.scatter(x_values, y_values, c=y_values, cmap=plt.cm.Blues, s=10)
+#
+# # 设置每个坐标轴的取值范围
+# ax.axis([0, 1100, 0, 1100000])
+
+# plt.savefig('squares_plot.png', bbox_inches='tight')
+
+
+# # 随机漫步
+# class RandomWalk:
+#     """一个生成随机漫步数据的类"""
+#
+#     def __init__(self, num_points=5000):
+#         """初始化随机漫步的属性"""
+#         self.num_points = num_points
+#
+#         # 所有随机漫步都始于(0，0)
+#         self.x_values = [0]
+#         self.y_values = [0]
+#
+#     def fill_walk(self):
+#         """计算随机漫步包含的所有点"""
+#
+#         # 不断漫步，直到列表达到指定的长度
+#         while len(self.x_values) < self.num_points:
+#
+#             # 决定前进方向以及沿着个方向前进的距离
+#             x_direction = choice([1, -1])
+#
+#             x_distance = choice([0, 1, 2, 3, 4])
+#             x_step = x_direction * x_distance
+#
+#             y_direction = choice([1, -1])
+#
+#             y_distance = choice([0, 1, 2, 3, 4])
+#             y_step = y_direction * y_distance
+#
+#             # 拒绝原地踏步
+#             if x_step == 0 and y_step == 0:
+#                 continue
+#
+#             # 计算下一个点的x值和y值
+#             x = self.x_values[-1] + x_step
+#             y = self.y_values[-1] + y_step
+#
+#             self.x_values.append(x)
+#             self.y_values.append(y)
+#
+#
+# # 只要程序处于活动状态，就不断地模拟随机漫步
+# while True:
+#     # 创建一个RandomWalk实例
+#     rw = RandomWalk(50_000)
+#     rw.fill_walk()
+#     # 将所有点都绘制出来
+#     plt.style.use('classic')
+#     fig, ax = plt.subplots(figsize=(10, 6), dpi=128)
+#     point_numbers = range(rw.num_points)
+#     ax.scatter(rw.x_values, rw.y_values, c=point_numbers,
+#                cmap=plt.cm.Blues, edgecolors='none', s=1)
+#
+#     # 隐藏坐标轴
+#     ax.get_xaxis().set_visible(False)
+#     ax.get_yaxis().set_visible(False)
+#
+#     plt.show()
+#
+#     keep_running = input("Make another walk?(y/n): ")
+#     if keep_running.lower() == 'n':
+#         break
+
+# class Die:
+#     """表示一个骰子的类"""
+# 
+#     def __init__(self, num_sides=6):
+#         """骰子默认为6面"""
+#         self.num_sides = num_sides
+# 
+#     def roll(self):
+#         """返回一个位于1和骰子面数之间的随机值"""
+#         return randint(1, self.num_sides)
+# 
+# # 创建一个D6和一个D10
+# die_1 = Die()
+# die_2 = Die(10)
+# 
+# 
+# # 掷几次骰子并将结果存储在一个列表中
+# results = []
+# for roll_num in range(50_000):
+#     result = die_1.roll() + die_2.roll()
+#     results.append(result)
+
+# # 分析结果
+# frequencies = []
+# max_reslut = die_1.num_sides + die_2.num_sides
+# for value in range(1, max_reslut+1):
+#     frequency = results.count(value)
+#     frequencies.append(frequency)
+# 
+# print(frequencies)
+# 
+# # 对结果进行可视化
+# x_value = list(range(2, max_reslut+1))
+# data = [Bar(x=x_value, y=frequencies)]
+# 
+# x_axis_config = {'title': '结果', 'dtick': 1}
+# y_axis_config = {'title': '结果的频率'}
+# my_layout = Layout(title='掷一个D6和一个D10 50 000次的结果',
+#         xaxis=x_axis_config, yaxis=y_axis_config)
+# offline.plot({'data': data, 'layout': my_layout}, filename='d6_d10.html')
